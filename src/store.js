@@ -2,15 +2,14 @@
  * Хранилище состояния приложения
  */
 class Store {
-  constructor(initState = {}) {
-    this.state = {
-      list: [],
+  endIndex = 0
+  constructor(initState = { list: [] }) {
+    this.state = initState
+    this.listeners = []
+
+    if (this.state.list.length > 0) {
+      this.endIndex = this.state.list.length
     }
-    this.state.list = initState.list.map((item) => ({
-      ...item,
-      selectionCount: 0,
-    }))
-    this.listeners = [] // Слушатели изменений состояния
   }
 
   /**
@@ -48,24 +47,13 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
-    const newItem = {
-      code: this.generateUniqueCode(),
-      title: 'Новая запись',
-    }
     this.setState({
       ...this.state,
-      list: [...this.state.list, newItem],
+      list: [
+        ...this.state.list,
+        { code: ++this.endIndex, title: 'Новая запись', selectionCount: 0 },
+      ],
     })
-  }
-
-  /**
-   * Генерация уникального кода
-   * @returns {number}
-   */
-
-  generateUniqueCode() {
-    this.codeCounter = (this.codeCounter || 0) + 1
-    return this.codeCounter
   }
 
   /**
