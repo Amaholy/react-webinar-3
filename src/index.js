@@ -6,17 +6,17 @@ import Store from './store.js'
 
 const store = new Store({
   list: [
-    { code: 1, title: 'Название элемента', selectionCount: 0 },
-    { code: 2, title: 'Некий объект', selectionCount: 0 },
-    { code: 3, title: 'Заголовок', selectionCount: 0 },
+    { code: 1, title: 'Название элемента', price: 100.0 },
+    { code: 2, title: 'Некий объект', price: 770 },
+    { code: 3, title: 'Заголовок', price: 33 },
     {
       code: 4,
       title: 'Очень длинное название элемента из семи слов',
-      selectionCount: 0,
+      price: 7955320,
     },
-    { code: 5, title: 'Запись', selectionCount: 0 },
-    { code: 6, title: 'Шестая запись', selectionCount: 0 },
-    { code: 7, title: 'Седьмая запись', selectionCount: 0 },
+    { code: 5, title: 'Запись', price: 120000 },
+    { code: 6, title: 'Шестая запись', price: 111 },
+    { code: 7, title: 'Седьмая запись', price: 0 },
   ],
 })
 
