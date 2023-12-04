@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { formatNumber } from '../../utils'
 import './style.css'
 
-function Item({ item, addItemToCart }) {
-  const handleAddItemToCart = () => {
-    addItemToCart(item)
-  }
-
+function Item(props) {
   return (
     <div className="Item">
-      <div className="Item-code">{item.code}</div>
-      <div className="Item-title">{item.title}</div>
+      <div className="Item-code">{props.item.code}</div>
+      <div className="Item-title">{props.item.title}</div>
+      <div className="Item-price">{formatNumber(props.item.price)}</div>
+      <div className={props.item.count && 'Item-count'}>
+        {props.item.count && `${props.item.count}\u00A0шт.`}
+      </div>
       <div className="Item-actions">
-        <span className="Item-price">{`${item.price} ₽`}</span>
-        <button onClick={handleAddItemToCart}>Добавить</button>
+        <button onClick={() => props.onClick(props.item.code)}>
+          {props.itemText}
+        </button>
       </div>
     </div>
   )
@@ -24,8 +26,13 @@ Item.propTypes = {
     code: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
+    number: PropTypes.number,
   }).isRequired,
-  addItemToCart: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+}
+
+Item.defaultProps = {
+  onClick: () => {},
 }
 
 export default React.memo(Item)

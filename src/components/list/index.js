@@ -1,13 +1,14 @@
-import React, { Children } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import Item from '../item'
 import './style.css'
 
-function List({ children }) {
+function List({ list, onClick, itemText }) {
   return (
     <div className="List">
-      {Children.toArray(children).map((child, index) => (
-        <div key={index} className="List-item">
-          {child}
+      {list.map((item) => (
+        <div key={item.code} className="List-item">
+          <Item item={item} onClick={onClick} itemText={itemText} />
         </div>
       ))}
     </div>
@@ -15,7 +16,17 @@ function List({ children }) {
 }
 
 List.propTypes = {
-  children: PropTypes.node,
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.number,
+    })
+  ).isRequired,
+  onClick: PropTypes.func,
+  itemText: PropTypes.string,
+}
+
+List.defaultProps = {
+  onClick: () => {},
 }
 
 export default React.memo(List)

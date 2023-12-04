@@ -1,15 +1,30 @@
 import React from 'react'
-import './style.css'
 import PropTypes from 'prop-types'
+import './style.css'
 
-const Modal = ({ children }) => (
-  <div className="Modal">
-    <div className="Modal-items">{children}</div>
-  </div>
-)
+function CustomModal({ children, isOpened }) {
+  console.log('modal is rendered')
 
-Modal.propTypes = {
-  children: PropTypes.node,
+  const onContentClick = (e) => {
+    e.stopPropagation()
+  }
+
+  const modalClasses = isOpened ? 'Modal Modal-opened' : 'Modal'
+
+  return (
+    <div className={modalClasses}>
+      <div className="Modal-overlay">
+        <div className="Modal-content" onClick={onContentClick}>
+          {children}
+        </div>
+      </div>
+    </div>
+  )
 }
 
-export default React.memo(Modal)
+CustomModal.propTypes = {
+  children: PropTypes.node,
+  isOpened: PropTypes.bool,
+}
+
+export default React.memo(CustomModal)

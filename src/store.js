@@ -1,4 +1,4 @@
-import { generateCode } from './utils'
+import { formatNumber, generateCode, generateCode1 } from './utils'
 
 /**
  * Хранилище состояния приложения
@@ -6,7 +6,8 @@ import { generateCode } from './utils'
 class Store {
   constructor(initState = {}) {
     this.state = initState
-    this.listeners = [] // Слушатели изменений состояния
+    this.listeners = []
+    this.uniqueItems = 0 // Слушатели изменений состояния
   }
 
   /**
@@ -41,43 +42,96 @@ class Store {
   }
 
   /**
-   * Добавление продукта в корзину по коду
-   * @param item
+   * Установка состояния
+   * @param code {Object}
    */
-  addToCart(item) {
-    const itemInCart = this.state.cart.find((el) => el.code === item.code)
-
-    this.setState({
-      ...this.state,
-
-      cart: itemInCart
-        ? this.state.cart.map((el) =>
-            el.code === item.code ? { ...el, count: el.count + 1 } : el
-          )
-        : [...this.state.cart, { ...item, count: 1 }],
-
-      sumOfItemsInCarts:
-        this.state.sumOfItemsInCarts +
-        (itemInCart ? itemInCart.price : item.price),
-
-      counter: this.state.counter + (itemInCart ? 0 : 1),
+  updateCartState(code) {
+    this.uniqueItems = this.uniqueItems + 1
+    this.state.list.map((item) => {
+      if (item.code === code) {
+        this.setState({
+          ...this.state,
+          cartList: [
+            ...this.state.cartList,
+            { code: item.code, title: item.title, price: item.price, count: 1 },
+          ],
+        })
+      }
     })
   }
-  /**
-   * Удаление продуктов из корзины
-   * @param item
-   */
-  removeFromCart(item) {
-    const delCartItem = this.state.cart.filter((el) => el.code !== item.code)
-    const delSumOfItemsInCarts =
-      this.state.sumOfItemsInCarts - item.count * item.price
-    const delCounter = this.state.counter - 1
 
+  /**
+   * Добавление нового товара в корзину
+   * @param code {Number}
+   */
+  addToCart(code) {
+    if (!this.state.cartList.length) {
+      this.updateCartState(code)
+    } else {
+      const itemExist = this.state.cartList.find(
+        (cartItem) => cartItem.code === code
+      )
+      if (itemExist) {
+        this.setState({
+          ...this.state,
+          cartList: this.state.cartList.map((cartItem) => {
+            if (cartItem.code === code) {
+              return { ...cartItem, count: cartItem.count + 1 }
+            } else {
+              return { ...cartItem }
+            }
+          }),
+        })
+      } else {
+        this.updateCartState(code)
+      }
+    }
+  }
+
+  /**
+   * Получение общей суммы товаров в корзине
+   */
+  getTotalPrice() {
+    return formatNumber(
+      this.state.cartList.reduce(
+        (sum, item) => sum + item.price * item.count,
+        0
+      )
+    )
+  }
+
+  /**
+   * Удаление товара из корзины
+   * @param code {Number}
+   */
+  deleteFromCart(code) {
+    this.uniqueItems = this.uniqueItems - 1
     this.setState({
       ...this.state,
-      cart: delCartItem,
-      sumOfItemsInCarts: delSumOfItemsInCarts,
-      counter: delCounter,
+      // Новый список, в котором не будет удаляемой записи
+      cartList: this.state.cartList.filter((item) => item.code !== code),
+    })
+  }
+
+  /**
+   * Выделение записи по коду
+   * @param code
+   */
+  selectItem(code) {
+    this.setState({
+      ...this.state,
+      list: this.state.list.map((item) => {
+        if (item.code === code) {
+          // Смена выделения и подсчёт
+          return {
+            ...item,
+            selected: !item.selected,
+            count: item.selected ? item.count : item.count + 1 || 1,
+          }
+        }
+        // Сброс выделения если выделена
+        return item.selected ? { ...item, selected: false } : item
+      }),
     })
   }
 }

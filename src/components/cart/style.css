@@ -1,15 +1,7 @@
-.Cart-cash {
-  width: 100%;
+.Cart-strong {
   display: flex;
   justify-content: flex-end;
-}
-.Cart-sum {
-  display: flex;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 21px;
-  padding: 20px 0 89px;
-}
-.Cart-summary {
-  margin: 0 120px 0 53px;
+  gap: 30px;
+  padding: 20px 80px;
+  font-weight: bold;
 }
