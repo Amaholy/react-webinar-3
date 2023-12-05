@@ -5,6 +5,7 @@ import List from '../list'
 import Modal from '../modals'
 import './style.css'
 
+// Destructure props for easier access
 function Cart(props) {
   const { onModalBtnClick, list, onClick, totalPrice } = props
 

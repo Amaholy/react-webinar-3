@@ -16,14 +16,14 @@ function Controls(props) {
     </span>
   )
 }
-
+// Define prop types for type checking
 Controls.propTypes = {
   onModalBtnClick: PropTypes.func,
   btnText: PropTypes.string,
 }
-
+// Provide default values for props
 Controls.defaultProps = {
   onModalBtnClick: () => {},
 }
-
+// Memoize the Controls component for performance optimization
 export default React.memo(Controls)
