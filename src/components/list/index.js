@@ -1,32 +1,29 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Item from '../item'
-import './style.css'
+import {memo} from "react";
+import PropTypes from 'prop-types';
+import Item from "../item";
+import './style.css';
 
-function List({ list, onClick, itemText }) {
+function List({list, renderItem}) {
   return (
-    <div className="List">
-      {list.map((item) => (
-        <div key={item.code} className="List-item">
-          <Item item={item} onClick={onClick} itemText={itemText} />
+    <div className='List'>{
+      list.map(item =>
+        <div key={item._id} className='List-item'>
+          {renderItem(item)}
         </div>
-      ))}
+      )}
     </div>
   )
 }
 
 List.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.number,
-    })
-  ).isRequired,
-  onClick: PropTypes.func,
-  itemText: PropTypes.string,
-}
+  list: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  })).isRequired,
+  renderItem: PropTypes.func,
+};
 
 List.defaultProps = {
-  onClick: () => {},
+  renderItem: (item) => {},
 }
 
-export default React.memo(List)
+export default memo(List);

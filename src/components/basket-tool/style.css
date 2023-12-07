@@ -1,0 +1,26 @@
+/* Контрол с общими действиями */
+.basket-tool {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.basket-tool-navlink {
+  color: #0087e9;
+  font-family: Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+.to-right {
+  display: flex;
+}
+
+.basket-tool-total {
+  font-weight: bold;
+  margin: 0 20px;
+}

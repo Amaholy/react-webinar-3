@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 10px;
+}
+
+.pagination-number,
+.pagination-number_buffer {
+  font-family: Arial;
+  text-align: center;
+  padding: 2px 0;
+  min-width: 20px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.pagination-number:hover {
+  background-color: #e1e1e1;
+}
+
+.pagination-number_buffer {
+  color: #cccccc;
+}
+
+.pagination-number.active {
+  background-color: #0087e9;
+  color: #fff;
+}

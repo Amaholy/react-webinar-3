@@ -1,0 +1,24 @@
+:root {
+  --item-details-padding: 10px 40px;
+  --item-details-text-line-height: 21px;
+  --item-details-text-font-size: 18px;
+  --item-details-price-font-size: 24px;
+  --item-details-vertical-padding: 10px 0;
+}
+
+.item-details {
+  padding: var(--item-details-padding);
+}
+
+.item-details_text {
+  line-height: var(--item-details-text-line-height);
+  padding: var(--item-details-vertical-padding);
+  font-size: var(--item-details-text-font-size);
+  margin: 0;
+}
+
+.item-details_price {
+  font-size: var(--item-details-price-font-size);
+  padding: var(--item-details-vertical-padding);
+  margin: 0;
+}
